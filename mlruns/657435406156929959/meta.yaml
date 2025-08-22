@@ -1,0 +1,6 @@
+artifact_location: file:///C:/Users/dell/Desktop/mlops_project/commit_analysis/mlruns/657435406156929959
+creation_time: 1755873733665
+experiment_id: '657435406156929959'
+last_update_time: 1755873733665
+lifecycle_stage: active
+name: dvc-pipeline

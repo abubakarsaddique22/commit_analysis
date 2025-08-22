@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/dell/Desktop/mlops_project/commit_analysis/mlruns/657435406156929959/66841ebb2cbe4ac9923d90002ae422f7/artifacts
+end_time: 1755875131660
+entry_point_name: ''
+experiment_id: '657435406156929959'
+lifecycle_stage: active
+run_id: 66841ebb2cbe4ac9923d90002ae422f7
+run_name: luxuriant-crane-583
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755875122158
+status: 3
+tags: []
+user_id: dell
