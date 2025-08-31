@@ -154,8 +154,15 @@ with mlflow.start_run(run_name="All Experiments") as parent_run:
                 mlflow.log_metric("recall", recall)
                 mlflow.log_metric("f1_score", f1)
                 
-                # Log model
-                mlflow.sklearn.log_model(model, "model")
+                # # Log model
+                # mlflow.sklearn.log_model(model, "model")
+                # # Save model locally
+                import joblib
+                model_path = "logistic_model.pkl"
+                joblib.dump(model, model_path)
+
+                # Log as artifact to Dagshub
+                mlflow.log_artifact(model_path)
                 
                 # Save and log the notebook
                 mlflow.log_artifact(__file__)
