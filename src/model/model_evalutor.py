@@ -1,5 +1,3 @@
-# updated model evaluation
-
 import numpy as np
 import pandas as pd
 import pickle
@@ -8,24 +6,24 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_a
 import logging
 import mlflow
 import mlflow.sklearn
-# import dagshub
+import dagshub
 import os
 
-# # Set up DagsHub credentials for MLflow tracking
-# dagshub_token = os.getenv("DAGSHUB_PAT")
-# if not dagshub_token:
-#     raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
 
-# os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-# os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 # dagshub_url = "https://dagshub.com"
-# repo_owner = "campusx-official"
+# repo_owner = ""
 # repo_name = "mlops-mini-project"
-
+mlflow.set_tracking_uri('https://dagshub.com/abubakarsaddique3434/commit_analysis.mlflow')
+dagshub.init(repo_owner='abubakarsaddique3434', repo_name='mlops_mini-project', mlflow=True)
 # Set up MLflow tracking URI
 # mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
-
 
 # logging configuration
 logger = logging.getLogger('model_evaluation')
@@ -119,8 +117,8 @@ def main():
     mlflow.set_experiment("dvc-pipeline")
     with mlflow.start_run() as run:  # Start an MLflow run
         try:
-            clf = load_model('models/model.pkl')
-            test_data = load_data('data/processed/test_bow.csv')
+            clf = load_model('./models/model.pkl')
+            test_data = load_data('./data/processed/test_bow.csv')
             
             X_test = test_data.iloc[:, :-1].values
             y_test = test_data.iloc[:, -1].values
