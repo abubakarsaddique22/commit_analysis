@@ -9,9 +9,6 @@ from sklearn.model_selection import train_test_split
 # ----------------------------------------------------
 # Logging Configuration
 # ----------------------------------------------------
-import logging
-import os
-
 # Create logs directory if not exists
 os.makedirs("logs", exist_ok=True)
 
