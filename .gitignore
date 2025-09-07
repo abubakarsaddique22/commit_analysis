@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 
+twitter_user_accessKeys.csv
+twitter_key_pair.pem
 
 venv
 models 
