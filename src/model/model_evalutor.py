@@ -11,12 +11,14 @@ import os
 # ===============================
 # DagsHub credentials (hardcoded)
 # ===============================
-dagshub_token = "767bb0bd8f47a60bf51f5aadc5b37d30fc0f3371"
-os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+# dagshub_token = "767bb0bd8f47a60bf51f5aadc5b37d30fc0f3371"
+# os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+# os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
-mlflow.set_tracking_uri('https://dagshub.com/abubakarsaddique3434/commit_analysis.mlflow')
-dagshub.init(repo_owner='abubakarsaddique3434', repo_name='mlops_mini-project', mlflow=True)
+# mlflow.set_tracking_uri('https://dagshub.com/abubakarsaddique3434/commit_analysis.mlflow')
+# dagshub.init(repo_owner='abubakarsaddique3434', repo_name='mlops_mini-project', mlflow=True)
+mlflow.set_tracking_uri('http://54.91.250.234:5000/')
+
 
 # ===============================
 # Logging configuration
@@ -139,13 +141,17 @@ def main():
                     mlflow.log_param(param_name, param_value)
             
             # Save model locally instead of mlflow.sklearn.log_model
-            with open("models/model_logged.pkl", "wb") as f:
-                pickle.dump(clf, f)
-            mlflow.log_artifact("models/model_logged.pkl")
+            # with open("models/model_logged.pkl", "wb") as f:
+            #     pickle.dump(clf, f)
+            # mlflow.log_artifact("models/model_logged.pkl")
+            # # mlflow.sklearn.log_model(model, artifact_path="model")
             
-            # Save model info (keep name consistent with DVC)
-            save_model_info(run.info.run_id, "model", 'reports/experiment_info.json')
-            
+            # # Save model info (keep name consistent with DVC)
+            # save_model_info(run.info.run_id, "model", 'reports/experiment_info.json')
+            mlflow.sklearn.log_model(clf, artifact_path="model")
+
+# Save model info (make sure model_path matches "model")
+            save_model_info(run.info.run_id, "model", 'reports/experiment_info.json')            
             # Log artifacts to MLflow
             mlflow.log_artifact('reports/metrics.json')
             mlflow.log_artifact('reports/experiment_info.json')
