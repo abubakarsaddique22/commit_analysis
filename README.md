@@ -1,7 +1,7 @@
 commit analysis
 ==============================
 
-A short description of the project.
+This is commit analysis project with end to end mlops.
 
 Project Organization
 ------------
