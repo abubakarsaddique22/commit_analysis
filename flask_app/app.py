@@ -19,9 +19,7 @@ app = Flask(__name__)
 # Load model & vectorizer
 # ===============================
 model_name = "my_model"
-model_alias = "champion"   # <-- use alias like 'champion' or 'staging'
-
-model_uri = f"models:/{model_name}@{model_alias}"
+model_uri = f"models:/{model_name}/Production"
 model = mlflow.pyfunc.load_model(model_uri)
 
 vectorizer_path = os.path.join("models", "vectorizer.pkl")
