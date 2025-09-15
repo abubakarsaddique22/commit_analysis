@@ -15,9 +15,17 @@ class FlaskAppTests(unittest.TestCase):
     def test_predict_page(self):
         response = self.client.post('/predict', data=dict(text="I love this!"))
         self.assertEqual(response.status_code, 200)
+
+        # ✅ Check for all 13 possible sentiments
+        expected_labels = [
+            b'anger', b'boredom', b'empty', b'enthusiasm', b'fun',
+            b'happiness', b'hate', b'love', b'neutral', b'relief',
+            b'sadness', b'surprise', b'worry'
+        ]
+
         self.assertTrue(
-            b'Happy' in response.data or b'Sad' in response.data,
-            "Response should contain either 'Happy' or 'Sad'"
+            any(label in response.data for label in expected_labels),
+            "Response should contain one of the expected sentiment labels"
         )
 
 if __name__ == '__main__':
