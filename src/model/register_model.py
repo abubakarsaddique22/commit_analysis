@@ -50,7 +50,7 @@ def register_model(model_name: str, model_info: dict):
     logger.info(f"Created version '{model_version.version}' of model '{model_name}'")
 
     # Assign alias instead of deprecated stage
-    alias = "production"  #  Assign alias (default = staging, but can also be 'production')
+    alias = "staging"  #  Assign alias (default = staging, but can also be 'production')
     client.set_registered_model_alias(model_name, alias, model_version.version)
     logger.debug(f"Alias '{alias}' now points to version {model_version.version} of '{model_name}'")
 
