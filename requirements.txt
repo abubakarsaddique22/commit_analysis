@@ -29,7 +29,6 @@ bcrypt==4.3.0
 billiard==4.2.1
 blinker==1.9.0
 boto3==1.39.11
-botocore==1.39.11
 cachetools==5.5.2
 celery==5.5.3
 certifi==2025.8.3
