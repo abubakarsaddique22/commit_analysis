@@ -117,6 +117,8 @@ def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
 # Main Function
 # ===============================
 def main():
+      # ✅ Ensure reports folder exists before saving anything
+    os.makedirs("reports", exist_ok=True)
     mlflow.set_experiment("dvc-pipeline")
     with mlflow.start_run() as run:  # Start an MLflow run
         try:
