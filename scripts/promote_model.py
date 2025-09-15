@@ -1,36 +1,26 @@
-# promote model
-
-import os
 import mlflow
+from mlflow.tracking import MlflowClient
 
-def promote_model():
-     # ===============================
-        # MLflow Tracking URI
-    # ===============================
-    mlflow.set_tracking_uri("http://54.91.250.234:5000/")
+# ===============================
+# MLflow Tracking URI
+# ===============================
+mlflow.set_tracking_uri("http://54.91.250.234:5000/")
 
-    client = mlflow.MlflowClient()
+def promote_model(model_name: str):
+    client = MlflowClient()
 
-    model_name = "my_model"
-    # Get the latest version in staging
-    latest_version_staging = client.get_latest_versions(model_name, stages=["Staging"])[0].version
+    # Get version currently assigned to "staging"
+    staging_versions = client.get_model_version_by_alias(model_name, "staging")
 
-    # Archive the current production model
-    prod_versions = client.get_latest_versions(model_name, stages=["Production"])
-    for version in prod_versions:
-        client.transition_model_version_stage(
-            name=model_name,
-            version=version.version,
-            stage="Archived"
-        )
+    if not staging_versions:
+        raise ValueError(f"No model version found with alias 'staging' for {model_name}")
 
-    # Promote the new model to production
-    client.transition_model_version_stage(
-        name=model_name,
-        version=latest_version_staging,
-        stage="Production"
-    )
-    print(f"Model version {latest_version_staging} promoted to Production")
+    staging_version = staging_versions.version
+    print(f"Staging alias currently points to version: {staging_version}")
+
+    # Update "production" alias to point to the same version
+    client.set_registered_model_alias(model_name, "production", staging_version)
+    print(f"Promoted model '{model_name}' version {staging_version} → alias 'production'")
 
 if __name__ == "__main__":
-    promote_model()
+    promote_model("my_model")
