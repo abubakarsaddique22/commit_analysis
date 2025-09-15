@@ -1,24 +1,53 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>Sentiment Analysis</title>
-    </head>
+<head>
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            background-color: brown;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .sentiment {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .anger { background-color: #FF4C4C; }        /* Red 😡 */
+        .boredom { background-color: #A9A9A9; }      /* Gray 😐 */
+        .empty { background-color: #808080; }        /* Dark Gray 😶 */
+        .enthusiasm { background-color: #FFA500; }   /* Orange 😃 */
+        .fun { background-color: #FFD700; }          /* Gold 🤩 */
+        .happiness { background-color: #4CAF50; }    /* Green 😊 */
+        .hate { background-color: #8B0000; }         /* Dark Red 😠 */
+        .love { background-color: #FF69B4; }         /* Pink ❤️ */
+        .neutral { background-color: #FFFFFF; color: black; } /* White 😐 */
+        .relief { background-color: #00CED1; }       /* Dark Turquoise 😌 */
+        .sadness { background-color: #1E90FF; }      /* Blue 😢 */
+        .surprise { background-color: #FF8C00; }     /* Dark Orange 😲 */
+        .worry { background-color: #9370DB; }        /* Purple 😟 */
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form action="/predict" method="POST">
+        <label for="text">Write text:</label><br>
+        <textarea id="text" name="text" rows="10" cols="40"></textarea><br><br>
+        <input type="submit" value="Predict">
+    </form>
 
-    <body style="background-color: brown">
-        <h1>Sentiment Analysis</h1>
-        <form action="/predict" method="POST">
-            <label>Write text:</label><br>
-            <textarea name="text" rows="10" cols="40"></textarea><br>
-            <input type="submit" value="Predict">
-        </form>
-
-        {% if result is not none %}
-            {% if result == 1 %}
-                <h2>Happy</h2>
-            {% else %}
-                <h2>Sad</h2>
-            {% endif %}
-        {% endif %}
-    </body>
+    {% if result is not none %}
+        <div class="sentiment {{ result|lower }}">
+            {% set emojis = {
+                'anger':'😡','boredom':'😐','empty':'😶','enthusiasm':'😃','fun':'🤩',
+                'happiness':'😊','hate':'😠','love':'❤️','neutral':'😐','relief':'😌',
+                'sadness':'😢','surprise':'😲','worry':'😟'
+            } %}
+            Predicted Sentiment: {{ emojis[result] }} {{ result.capitalize() }}
+        </div>
+    {% endif %}
+</body>
 </html>

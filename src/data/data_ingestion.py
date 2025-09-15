@@ -140,6 +140,10 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         # df['sentiment'] = df['sentiment'].map({'happiness': 1, 'sadness': 0})
         le = LabelEncoder()
         df['sentiment'] = le.fit_transform(df['sentiment'])
+        
+        # Show mapping
+        label_mapping = dict(zip(le.classes_, le.transform(le.classes_)))
+        print(label_mapping)
 
         if df.empty:
             raise ValueError("No data left after preprocessing.")
