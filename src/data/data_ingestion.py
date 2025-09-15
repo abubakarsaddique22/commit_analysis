@@ -5,6 +5,7 @@ import pandas as pd
 import yaml
 import logging
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 # ----------------------------------------------------
 # Logging Configuration
@@ -132,11 +133,13 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         # Drop unnecessary column
         df.drop(columns=['tweet_id'], inplace=True, errors='ignore')
 
-        # Keep only happiness & sadness
-        df = df[df['sentiment'].isin(['happiness', 'sadness'])]
+        # # Keep only happiness & sadness
+        # df = df[df['sentiment'].isin(['happiness', 'sadness'])]
 
         # Encode sentiment: happiness=1, sadness=0
-        df['sentiment'] = df['sentiment'].map({'happiness': 1, 'sadness': 0})
+        # df['sentiment'] = df['sentiment'].map({'happiness': 1, 'sadness': 0})
+        le = LabelEncoder()
+        df['sentiment'] = le.fit_transform(df['sentiment'])
 
         if df.empty:
             raise ValueError("No data left after preprocessing.")
